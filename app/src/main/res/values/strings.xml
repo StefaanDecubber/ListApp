@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">AndroidProjectShoppingList</string>
+    <string name="title_waitinggame">Waiting game</string>
+    <string name="title_home">Home</string>
+    <string name="title_shoppinglist">Shopping list</string>
+    <string name="shopping_item_add_name">Name</string>
+    <string name="shopping_item_add_category">Category</string>
+    <string name="shopping_item_add_quantity">Quantity</string>
+    <string name="shopping_item_add_button">Add</string>
+    <string name="menu_item_add">Add item</string>
+</resources>
