@@ -30,7 +30,6 @@ class ShoppinglistAddItemFragment : Fragment() {
 
 
         binding.fragmentShoppingItemAddButton.setOnClickListener{ view: View ->
-
             Navigation.findNavController(view).navigate(R.id.action_navigation_shoppinglist_add_item_fragment_to_navigation_shoppinglist)
         }
 
