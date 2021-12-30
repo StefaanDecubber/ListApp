@@ -1,6 +1,7 @@
 package com.example.androidprojectshoppinglist
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -8,10 +9,18 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.androidprojectshoppinglist.databinding.ActivityMainBinding
+import com.example.androidprojectshoppinglist.ui.shoppinglist.ShoppinglistViewModel
+import com.example.androidprojectshoppinglist.ui.shoppinglist.ShoppinglistViewModelFactory
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    /*
+    private val shoppinglistViewModel: ShoppinglistViewModel by viewModels {
+        ShoppinglistViewModelFactory((application as ShoppinglistApplication).repository)
+    }
+
+     */
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

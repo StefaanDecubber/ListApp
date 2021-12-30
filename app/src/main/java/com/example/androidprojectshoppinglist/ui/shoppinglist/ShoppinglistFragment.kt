@@ -2,17 +2,16 @@ package com.example.androidprojectshoppinglist.ui.shoppinglist
 
 import android.os.Bundle
 import android.view.*
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.androidprojectshoppinglist.R
+import com.example.androidprojectshoppinglist.data.shoppinglist.ShoppinglistDatabase
+import com.example.androidprojectshoppinglist.data.shoppinglist.ShoppinglistDatabaseDao
 import com.example.androidprojectshoppinglist.databinding.FragmentShoppinglistBinding
 
 class ShoppinglistFragment : Fragment() {
-
-    private lateinit var notificationsViewModel: ShoppinglistViewModel
+    private lateinit var shoppinglistViewModel: ShoppinglistViewModel
     private var _binding: FragmentShoppinglistBinding? = null
 
     // This property is only valid between onCreateView and
@@ -28,17 +27,15 @@ class ShoppinglistFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        notificationsViewModel =
-            ViewModelProvider(this)[ShoppinglistViewModel::class.java]
-
         _binding = FragmentShoppinglistBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        val application = requireNotNull(this.activity).application
+        val dataSource = ShoppinglistDatabase.getInstance(application).shoppinglistDatabaseDao
+        val viewModelFactory = ShoppinglistViewModelFactory(dataSource, application)
+        val shoppinglistViewModel = ViewModelProvider(this, viewModelFactory)[ShoppinglistViewModel::class.java]
 
-        val textView: TextView = binding.textShoppinglist
-        notificationsViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
-        return root
+        binding.shoppinglistViewModel = shoppinglistViewModel
+        binding.lifecycleOwner = this
+        return binding.root
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
