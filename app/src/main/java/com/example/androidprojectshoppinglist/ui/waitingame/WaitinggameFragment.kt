@@ -21,17 +21,12 @@ class WaitinggameFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        waitinggameViewModel =
-            ViewModelProvider(this)[WaitinggameViewModel::class.java]
-
+        waitinggameViewModel = ViewModelProvider(this)[WaitinggameViewModel::class.java]
         _binding = FragmentWaitinggameBinding.inflate(inflater, container, false)
-        val root: View = binding.root
 
-        val textView: TextView = binding.textWaitinggame
-        waitinggameViewModel.text.observe(viewLifecycleOwner, {
-            textView.text = it
-        })
-        return root
+        binding.waitinggameViewModel = waitinggameViewModel
+        binding.lifecycleOwner = this
+        return binding.root
     }
 
     override fun onDestroyView() {
