@@ -21,14 +21,15 @@ interface ShoppinglistDatabaseDao {
     @Delete
     fun delete(item: ShoppingItem)
 
-    @Delete
-    fun deleteAllItems(items: List<ShoppingItem>):Int
+    @Query("DELETE FROM shoppinglist_table")
+    suspend fun deleteAllItems()
 
     @Query("SELECT * FROM shoppinglist_table ORDER BY category DESC")
-    fun getAllItems(): List<ShoppingItem>
+    fun getAllItems(): LiveData<List<ShoppingItem>>
 
-    /*
-    @Query("DELETE FROM shoppinglist_table")
-    suspend fun deleteAll()
-     */
+    @Query("SELECT * FROM shoppinglist_table ORDER BY category DESC LIMIT 1")
+    fun getShoppingitem(): ShoppingItem?
+
+
+
 }

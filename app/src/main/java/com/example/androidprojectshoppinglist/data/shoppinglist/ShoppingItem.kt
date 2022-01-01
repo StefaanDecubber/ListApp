@@ -9,11 +9,15 @@ import androidx.room.PrimaryKey
 data class ShoppingItem(
     @PrimaryKey(autoGenerate = true)
     var itemId:Long = 0L,
+
     @ColumnInfo(name = "name")
-    var item: String = "",
+    var name: String = "testnaam",
+
     @ColumnInfo(name = "category")
-    var category: String,
+    var category: String = "testcategorie",
+
     @ColumnInfo(name = "quantity")
-    var quantity: Int){
+    var quantity: Int = 1
+    ){
 
 }

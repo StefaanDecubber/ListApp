@@ -38,7 +38,7 @@ abstract class ShoppinglistDatabase : RoomDatabase(){
             }
         }
 
-        /*
+
         fun getDatabase(context: Context, scope: CoroutineScope) : ShoppinglistDatabase {
             return INSTANCE ?: synchronized(this){
                 val instance = Room.databaseBuilder(
@@ -56,9 +56,6 @@ abstract class ShoppinglistDatabase : RoomDatabase(){
             }
         }
 
-         */
-
-        /*
         private class ShoppinglistDatabaseCallback(private val scope: CoroutineScope): RoomDatabase.Callback(){
             override fun onCreate(db: SupportSQLiteDatabase) {
                 super.onCreate(db)
@@ -71,10 +68,11 @@ abstract class ShoppinglistDatabase : RoomDatabase(){
             }
         }
 
+
         suspend fun populateDatabase(shoppinglistDao: ShoppinglistDatabaseDao) {
             // Start the app with a clean database every time.
             // Not needed if you only populate on creation.
-            shoppinglistDao.deleteAll()
+            shoppinglistDao.deleteAllItems()
 
             var shoppingItem = ShoppingItem(1,"Eggs", "Dairy", 12)
             shoppinglistDao.insert(shoppingItem)
@@ -109,6 +107,6 @@ abstract class ShoppinglistDatabase : RoomDatabase(){
             shoppingItem = ShoppingItem(16,"Beer", "Drinks",1)
             shoppinglistDao.insert(shoppingItem)
         }
-        */
+
     }
 }

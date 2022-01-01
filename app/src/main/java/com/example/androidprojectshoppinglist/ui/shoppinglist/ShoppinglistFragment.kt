@@ -3,6 +3,7 @@ package com.example.androidprojectshoppinglist.ui.shoppinglist
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.androidprojectshoppinglist.R
@@ -22,11 +23,7 @@ class ShoppinglistFragment : Fragment() {
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentShoppinglistBinding.inflate(inflater, container, false)
         val application = requireNotNull(this.activity).application
         val dataSource = ShoppinglistDatabase.getInstance(application).shoppinglistDatabaseDao
@@ -35,6 +32,15 @@ class ShoppinglistFragment : Fragment() {
 
         binding.shoppinglistViewModel = shoppinglistViewModel
         binding.lifecycleOwner = this
+
+        val adapter = ShoppinglistAdapter()
+        binding.shoppinglist.adapter = adapter
+
+        shoppinglistViewModel.shoppinglist.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                adapter.submitList(it)
+            }
+        })
         return binding.root
     }
 
