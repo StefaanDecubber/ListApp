@@ -11,9 +11,12 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class WaitinggameViewModel : ViewModel() {
-    private val _response = MutableLiveData<String>()
-    val response: LiveData<String>
-        get() = _response
+    private val _joke = MutableLiveData<String>()
+    private val _titleJoke = MutableLiveData<String>()
+    val joke: LiveData<String>
+        get() = _joke
+    val titleJoke: LiveData<String>
+        get() = _titleJoke
 
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
@@ -25,11 +28,13 @@ class WaitinggameViewModel : ViewModel() {
     private fun getJokeProperties() {
         viewModelScope.launch {
             try {
-                var result = JokeApi.retrofitService.getJoke()
+                val result = JokeApi.retrofitService.getJoke()
                 //.contents?.jokes?.get(0)?.joke?.text
-                _response.value = "Succes: ${result.contents?.jokes?.get(0)?.joke?.text}"
+                _titleJoke.value = result.contents?.jokes?.get(0)?.joke?.title
+                _joke.value = result.contents?.jokes?.get(0)?.joke?.text
             } catch (e: Exception) {
-                _response.value = "Failure: ${e.message}"
+                _titleJoke.value = "Failure getting data: ${e.message}"
+                _joke.value = "Q: What does Santa say when he's taking attendance at school?\nA:Present"
             }
         }
     }
