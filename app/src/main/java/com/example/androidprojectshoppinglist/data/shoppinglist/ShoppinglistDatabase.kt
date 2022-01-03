@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 
 //https://github.com/googlecodelabs/android-room-with-a-view/tree/kotlin/app/src/main/java/com/example/android/roomwordssample
 //done
-@Database(entities = [ShoppingItem::class], version = 1, exportSchema = false)
+@Database(entities = [ShoppingItem::class], version = 2, exportSchema = false)
 abstract class ShoppinglistDatabase : RoomDatabase(){
     abstract val shoppinglistDatabaseDao : ShoppinglistDatabaseDao
 
@@ -74,17 +74,18 @@ abstract class ShoppinglistDatabase : RoomDatabase(){
             // Not needed if you only populate on creation.
             shoppinglistDao.deleteAllItems()
 
-            var shoppingItem = ShoppingItem(1,"Eggs", "Dairy", 12)
+            var shoppingItem = ShoppingItem("Eggs", "Dairy", "12")
             shoppinglistDao.insert(shoppingItem)
-            shoppingItem = ShoppingItem(2,"Cheese", "Dairy",1)
+            shoppingItem = ShoppingItem("Cheese", "Dairy","1")
             shoppinglistDao.insert(shoppingItem)
-            shoppingItem = ShoppingItem(3,"Sausages", "Meat",2)
+            /*
+            shoppingItem = ShoppingItem(3,"Sausages", "Meat","2")
             shoppinglistDao.insert(shoppingItem)
-            shoppingItem = ShoppingItem(4,"Chicken", "Meat",1)
+            shoppingItem = ShoppingItem(4,"Chicken", "Meat","1")
             shoppinglistDao.insert(shoppingItem)
-            shoppingItem = ShoppingItem(5,"Banana", "Fruit",1)
+            shoppingItem = ShoppingItem(5,"Banana", "Fruit","1")
             shoppinglistDao.insert(shoppingItem)
-            shoppingItem = ShoppingItem(6,"Orange", "Fruit",5)
+            shoppingItem = ShoppingItem(6,"Orange", "Fruit","5")
             shoppinglistDao.insert(shoppingItem)
             shoppingItem = ShoppingItem(7,"Fishsticks", "Meat",3)
             shoppinglistDao.insert(shoppingItem)
@@ -106,6 +107,7 @@ abstract class ShoppinglistDatabase : RoomDatabase(){
             shoppinglistDao.insert(shoppingItem)
             shoppingItem = ShoppingItem(16,"Beer", "Drinks",1)
             shoppinglistDao.insert(shoppingItem)
+            */
         }
 
     }

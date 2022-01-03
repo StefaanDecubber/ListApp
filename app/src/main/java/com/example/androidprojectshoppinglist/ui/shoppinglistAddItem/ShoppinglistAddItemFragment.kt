@@ -11,8 +11,11 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.navigation.Navigation
 import com.example.androidprojectshoppinglist.R
+import com.example.androidprojectshoppinglist.data.shoppinglist.ShoppinglistDatabase
 import com.example.androidprojectshoppinglist.databinding.FragmentShoppinglistAddItemBinding
 import com.example.androidprojectshoppinglist.databinding.FragmentShoppinglistBinding
+import com.example.androidprojectshoppinglist.ui.shoppinglist.ShoppinglistViewModel
+import com.example.androidprojectshoppinglist.ui.shoppinglist.ShoppinglistViewModelFactory
 
 class ShoppinglistAddItemFragment : Fragment() {
 
@@ -25,15 +28,33 @@ class ShoppinglistAddItemFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        shoppinglistAddItemViewModel = ViewModelProvider(this)[ShoppinglistAddItemViewModel::class.java]
+        val application = requireNotNull(this.activity).application
+        val dataSource = ShoppinglistDatabase.getInstance(application).shoppinglistDatabaseDao
+        val viewModelFactory = ShoppinglistAddItemViewModelFactory(dataSource, application)
+        shoppinglistAddItemViewModel = ViewModelProvider(this, viewModelFactory)[ShoppinglistAddItemViewModel::class.java]
         _binding = FragmentShoppinglistAddItemBinding.inflate(inflater, container, false)
 
+        shoppinglistAddItemViewModel.initData()
 
         binding.fragmentShoppingItemAddButton.setOnClickListener{ view: View ->
-            Navigation.findNavController(view).navigate(R.id.action_navigation_shoppinglist_add_item_fragment_to_navigation_shoppinglist)
+            run {
+                if(shoppinglistAddItemViewModel.submitForm()){
+                    shoppinglistAddItemViewModel.createItem()
+                    Navigation.findNavController(view).navigate(R.id.action_navigation_shoppinglist_add_item_fragment_to_navigation_shoppinglist)
+                }
+            }
         }
 
+        shoppinglistAddItemViewModel.getFormViewStateLiveData().observe(viewLifecycleOwner, { viewState ->
+            setFormViewState(viewState)
+        })
+
         return binding.root
+    }
+
+    private fun setFormViewState(viewState: AddItemFormViewState) {
+        binding.formViewState = viewState
+        binding.executePendingBindings()
     }
 
 

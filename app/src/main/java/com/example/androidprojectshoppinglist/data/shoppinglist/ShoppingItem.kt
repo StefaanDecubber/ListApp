@@ -7,17 +7,16 @@ import androidx.room.PrimaryKey
 //https://github.com/googlecodelabs/android-room-with-a-view/tree/kotlin/app/src/main/java/com/example/android/roomwordssample
 @Entity(tableName = "shoppinglist_table")
 data class ShoppingItem(
-    @PrimaryKey(autoGenerate = true)
-    var itemId:Long = 0L,
-
     @ColumnInfo(name = "name")
-    var name: String = "testnaam",
+    var name: String,
 
     @ColumnInfo(name = "category")
-    var category: String = "testcategorie",
+    var category: String,
 
     @ColumnInfo(name = "quantity")
-    var quantity: Int = 1
+    var quantity: String
     ){
+    @PrimaryKey(autoGenerate = true)
+    var itemId:Long = 0L
 
 }
