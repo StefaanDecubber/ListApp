@@ -20,37 +20,37 @@ class ShoppinglistViewModel(val database: ShoppinglistDatabaseDao, application: 
 
     fun onCreateData(){
         viewModelScope.launch {
-            var shoppingItem = ShoppingItem("Eggs", "Dairy", "12")
+            var shoppingItem = ShoppingItem("Eggs", "Dairy", "12", checked = true)
             insert(shoppingItem)
-            shoppingItem = ShoppingItem("Cheese", "Dairy","1")
+            shoppingItem = ShoppingItem("Cheese", "Dairy","1", false)
             insert(shoppingItem)
-            shoppingItem = ShoppingItem("Sausages", "Meat","2")
+            shoppingItem = ShoppingItem("Sausages", "Meat","2", false)
             insert(shoppingItem)
-            shoppingItem = ShoppingItem("Chicken", "Meat","1")
+            shoppingItem = ShoppingItem("Chicken", "Meat","1", false)
             insert(shoppingItem)
-            shoppingItem = ShoppingItem("Banana", "Fruit","1")
+            shoppingItem = ShoppingItem("Banana", "Fruit","1", false)
             insert(shoppingItem)
-            shoppingItem = ShoppingItem("Orange", "Fruit","5")
+            shoppingItem = ShoppingItem("Orange", "Fruit","5", false)
             insert(shoppingItem)
-            shoppingItem = ShoppingItem("Fishsticks", "Meat","3")
+            shoppingItem = ShoppingItem("Fishsticks", "Meat","3", false)
             insert(shoppingItem)
-            shoppingItem = ShoppingItem("Paper towels", "Cleaning","2")
+            shoppingItem = ShoppingItem("Paper towels", "Cleaning","2", false)
             insert(shoppingItem)
-            shoppingItem = ShoppingItem("Shampoo", "Care","2")
+            shoppingItem = ShoppingItem("Shampoo", "Care","2", false)
             insert(shoppingItem)
-            shoppingItem = ShoppingItem("Corn flakes", "Cereals","1")
+            shoppingItem = ShoppingItem("Corn flakes", "Cereals","1", false)
             insert(shoppingItem)
-            shoppingItem = ShoppingItem("Beer", "Drinks","24")
+            shoppingItem = ShoppingItem("Beer", "Drinks","24", false)
             insert(shoppingItem)
-            shoppingItem = ShoppingItem("Beer", "Drinks","1")
+            shoppingItem = ShoppingItem("Beer", "Drinks","1", false)
             insert(shoppingItem)
-            shoppingItem = ShoppingItem("Beer", "Drinks","1")
+            shoppingItem = ShoppingItem("Beer", "Drinks","1", false)
             insert(shoppingItem)
-            shoppingItem = ShoppingItem("Beer", "Drinks","1")
+            shoppingItem = ShoppingItem("Beer", "Drinks","1", false)
             insert(shoppingItem)
-            shoppingItem = ShoppingItem("Beer", "Drinks","1")
+            shoppingItem = ShoppingItem("Beer", "Drinks","1", false)
             insert(shoppingItem)
-            shoppingItem = ShoppingItem("Beer", "Drinks","1")
+            shoppingItem = ShoppingItem("Beer", "Drinks","1", false)
             insert(shoppingItem)
 
         }
@@ -72,12 +72,20 @@ class ShoppinglistViewModel(val database: ShoppinglistDatabaseDao, application: 
         }
     }
 
-    private suspend fun insert(shippingItem: ShoppingItem) {
+    private suspend fun insert(shoppingItem: ShoppingItem) {
         withContext(Dispatchers.IO) {
-            database.insert(shippingItem)
+            database.insert(shoppingItem)
+        }
+    }
+
+    suspend fun update(shoppingItem: ShoppingItem){
+        withContext(Dispatchers.IO) {
+            database.update(shoppingItem)
         }
     }
 }
+
+
 
 /*
 class ShoppinglistViewModelFactory(private val repository: ShoppinglistRepository) : ViewModelProvider.Factory {

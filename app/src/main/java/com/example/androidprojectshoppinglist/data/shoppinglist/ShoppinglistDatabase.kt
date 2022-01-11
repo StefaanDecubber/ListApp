@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 
 //https://github.com/googlecodelabs/android-room-with-a-view/tree/kotlin/app/src/main/java/com/example/android/roomwordssample
 //done
-@Database(entities = [ShoppingItem::class], version = 2, exportSchema = false)
+@Database(entities = [ShoppingItem::class], version = 3, exportSchema = false)
 abstract class ShoppinglistDatabase : RoomDatabase(){
     abstract val shoppinglistDatabaseDao : ShoppinglistDatabaseDao
 
@@ -74,9 +74,9 @@ abstract class ShoppinglistDatabase : RoomDatabase(){
             // Not needed if you only populate on creation.
             shoppinglistDao.deleteAllItems()
 
-            var shoppingItem = ShoppingItem("Eggs", "Dairy", "12")
+            var shoppingItem = ShoppingItem("Eggs", "Dairy", "12", false)
             shoppinglistDao.insert(shoppingItem)
-            shoppingItem = ShoppingItem("Cheese", "Dairy","1")
+            shoppingItem = ShoppingItem("Cheese", "Dairy","1", false)
             shoppinglistDao.insert(shoppingItem)
             /*
             shoppingItem = ShoppingItem(3,"Sausages", "Meat","2")

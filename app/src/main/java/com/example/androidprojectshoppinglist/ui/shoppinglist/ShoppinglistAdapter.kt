@@ -2,65 +2,66 @@ package com.example.androidprojectshoppinglist.ui.shoppinglist
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidprojectshoppinglist.data.shoppinglist.ShoppingItem
 import com.example.androidprojectshoppinglist.databinding.FragmentShoppinglistItemBinding
+import android.provider.ContactsContract.CommonDataKinds.Note
+import java.util.ArrayList
 
-class ShoppinglistAdapter : ListAdapter<ShoppingItem, ShoppinglistAdapter.ViewHolder>(ShoppingitemDiffCallback()) {
+
+
+
+
+
+
+class ShoppinglistAdapter(private val listener: OnItemClickListener) : ListAdapter<ShoppingItem, ShoppinglistAdapter.ViewHolder>(ShoppingitemDiffCallback()) {
+
+    private lateinit var shoppinglist : List<ShoppingItem>
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val shoppingItem = getItem(position)
         holder.bind(shoppingItem)
-        /*
-        holder.itemView.setOnLongClickListener {
-            deleteItem(position)
-        }
-        holder.shoppingListItemName.setOnLongClickListener {
-            deleteItem(position)
-        }
-         */
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder.from(parent)
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val binding = FragmentShoppinglistItemBinding.inflate(layoutInflater, parent, false)
+
+        return ViewHolder(binding)
     }
 
-    class ViewHolder private constructor(val binding: FragmentShoppinglistItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: ShoppingItem){
+    inner class ViewHolder(val binding: FragmentShoppinglistItemBinding) : RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            binding.apply {
+                shoppinglistItemName.setOnClickListener{
+                    val position = adapterPosition
+                    if(position != RecyclerView.NO_POSITION){
+                        val shoppingItem = getItem(position)
+                        listener.onCheckBoxClick(shoppingItem, shoppinglistItemName.isChecked)
+                    }
+                }
+            }
+        }
+
+        fun bind(item: ShoppingItem) {
             binding.shoppingitem = item
             binding.executePendingBindings()
         }
-        companion object {
-            fun from(parent: ViewGroup):ViewHolder{
-                val layoutInflater = LayoutInflater.from(parent.context)
-                val binding = FragmentShoppinglistItemBinding.inflate(layoutInflater, parent, false)
 
-                return ViewHolder(binding)
-            }
-        }
-    }
-
-    /*
-    var data = listOf<ShoppingItem>()
-        set(value){
-            field = value
-            notifyDataSetChanged()
+        fun getChecked(): Boolean {
+            val checked = binding.shoppinglistItemName
+            return checked.isChecked
         }
 
-    override fun getItemCount(): Int = data.size
-
-    //TODO write a delete method to show a popup where you can confirm or cancel your delete
-    fun deleteItem(position: Int): Boolean{
-        showDeletePopup()
-        return true
+    }
+    interface OnItemClickListener {
+        fun onCheckBoxClick(shoppingItem: ShoppingItem, isChecked: Boolean)
     }
 
-    private fun showDeletePopup(){
-        //val view = LayoutInflater.from()
-        //return PopupWindow(R.layout.pop_up_window_delete_shopping_item, ViewGroup.LayoutParams.WRAP_CONTENT)
-    }
-*/
 }
 
 class ShoppingitemDiffCallback : DiffUtil.ItemCallback<ShoppingItem>() {

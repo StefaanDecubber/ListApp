@@ -62,7 +62,7 @@ class ShoppinglistAddItemViewModel(val database: ShoppinglistDatabaseDao, applic
         viewModelScope.launch {
             val formValues = formViewStateLiveData.value
             val shoppingItem =
-                formValues?.let { ShoppingItem(it.name, formValues.category, formValues.quantity) }
+                formValues?.let { ShoppingItem(it.name, formValues.category, formValues.quantity, false) }
             if (shoppingItem != null) {
                 insert(shoppingItem)
             }

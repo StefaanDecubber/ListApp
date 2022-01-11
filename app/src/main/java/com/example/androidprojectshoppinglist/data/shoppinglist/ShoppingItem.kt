@@ -14,7 +14,10 @@ data class ShoppingItem(
     var category: String,
 
     @ColumnInfo(name = "quantity")
-    var quantity: String
+    var quantity: String,
+
+    @ColumnInfo(name = "checked")
+    var checked: Boolean
     ){
     @PrimaryKey(autoGenerate = true)
     var itemId:Long = 0L
