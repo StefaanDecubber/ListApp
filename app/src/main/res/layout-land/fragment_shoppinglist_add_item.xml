@@ -6,12 +6,7 @@
         <variable
             name="shoppinglistAddItemViewModel"
             type="com.example.androidprojectshoppinglist.ui.shoppinglistAddItem.ShoppinglistAddItemViewModel" />
-        <variable
-            name="formViewState"
-            type="com.example.androidprojectshoppinglist.ui.shoppinglistAddItem.AddItemFormViewState" />
-        <import type="com.example.androidprojectshoppinglist.model.FormValidationErrorTags" />
     </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -32,111 +27,62 @@
             tools:context=".MainActivity">
 
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Name">
+                app:helperText="vereist*"
+                android:hint="@string/name"
+                app:helperTextTextColor="@color/red"
+                app:errorEnabled="true"
+                app:errorIconDrawable="@drawable/ic_error_18dp">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/textInputEditTextName"
-                    setFormValidationError="@{formViewState.formErrors}"
+                    android:id="@+id/textInputEditTextItemname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@android:color/white"
-                    android:tag="@{FormValidationErrorTags.INVALID_NAME.name()}"
-                    android:text="@={formViewState.name}" />
+                    android:backgroundTint="@android:color/white"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Category">
+                android:hint="@string/category"
+                app:helperText="vereist*"
+                app:helperTextTextColor="@color/red"
+                app:errorEnabled="true"
+                app:errorIconDrawable="@drawable/ic_error_18dp">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/textInputEditTextSurname"
-                    setFormValidationError="@{formViewState.formErrors}"
+                    android:id="@+id/textInputEditTextCategory"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@android:color/white"
-                    android:tag="@{FormValidationErrorTags.INVALID_CATEGORY.name()}"
-                    android:text="@={formViewState.category}" />
+                    android:backgroundTint="@android:color/white"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Quantity">
+                android:hint="@string/quantity"
+                app:helperText="vereist*"
+                app:helperTextTextColor="@color/red"
+                app:errorEnabled="true"
+                app:errorIconDrawable="@drawable/ic_error_18dp">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/textInputEditTextAge"
-                    setFormValidationError="@{formViewState.formErrors}"
+                    android:id="@+id/textInputEditTextQuantity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@android:color/white"
-                    android:inputType="number"
-                    android:tag="@{FormValidationErrorTags.INVALID_QUANTITY.name()}"
-                    android:text="@={formViewState.quantity}" />
+                    android:inputType="number"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
-        <!--
-            <EditText
-            android:id="@+id/fragment_shopping_item_add_name"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:ems="10"
-            android:hint="@string/shopping_item_add_name"
-            android:inputType="textPersonName"
-            android:text="@{}"
-            app:layout_constraintBottom_toTopOf="@+id/fragment_shopping_item_add_category"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed" />
 
-        TODO Create spinner with categories (need adapter)
-
-        <EditText
-            android:id="@+id/fragment_shopping_item_add_category"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:ems="10"
-            android:hint="@string/shopping_item_add_category"
-            android:inputType="textPersonName"
-            android:text="@{}"
-            app:layout_constraintBottom_toTopOf="@+id/fragment_shopping_item_add_quantity"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_shopping_item_add_name" />
-
-        <EditText
-            android:id="@+id/fragment_shopping_item_add_quantity"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="32dp"
-            android:ems="10"
-            android:hint="@string/shopping_item_add_quantity"
-            android:inputType="numberDecimal"
-            app:layout_constraintBottom_toTopOf="@+id/fragment_shopping_item_add_button"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_shopping_item_add_category" />
-        -->
         <Button
             android:id="@+id/fragment_shopping_item_add_button"
             android:layout_width="0dp"
@@ -146,11 +92,10 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
             android:text="@string/shopping_item_add_button"
-            android:enabled="@{formViewState.addButtonEnabled}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat" />
+            app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

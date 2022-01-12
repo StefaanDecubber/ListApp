@@ -10,4 +10,7 @@
     <string name="menu_item_add">Add item</string>
     <string name="add_objects">Add items</string>
     <string name="delete_list">Delete list</string>
+    <string name="name">Name</string>
+    <string name="category">Category</string>
+    <string name="quantity">Quantity</string>
 </resources>

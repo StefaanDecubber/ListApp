@@ -9,7 +9,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.core.widget.doOnTextChanged
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.example.androidprojectshoppinglist.R
 import com.example.androidprojectshoppinglist.data.shoppinglist.ShoppinglistDatabase
 import com.example.androidprojectshoppinglist.databinding.FragmentShoppinglistAddItemBinding
@@ -33,29 +35,49 @@ class ShoppinglistAddItemFragment : Fragment() {
         val viewModelFactory = ShoppinglistAddItemViewModelFactory(dataSource, application)
         shoppinglistAddItemViewModel = ViewModelProvider(this, viewModelFactory)[ShoppinglistAddItemViewModel::class.java]
         _binding = FragmentShoppinglistAddItemBinding.inflate(inflater, container, false)
+        binding.shoppinglistAddItemViewModel = shoppinglistAddItemViewModel
 
-        shoppinglistAddItemViewModel.initData()
-
-        binding.fragmentShoppingItemAddButton.setOnClickListener{ view: View ->
-            run {
-                if(shoppinglistAddItemViewModel.submitForm()){
-                    shoppinglistAddItemViewModel.createItem()
-                    Navigation.findNavController(view).navigate(R.id.action_navigation_shoppinglist_add_item_fragment_to_navigation_shoppinglist)
-                }
-            }
+        binding.textInputEditTextItemname.doOnTextChanged{text, start, before, count ->
+            if(!Validators.validateItemname(text!!.toString()))
+                binding.textInputEditTextItemname.error = "Moet ingevuld zijn"
+            else
+                binding.textInputEditTextItemname.error = null
         }
 
-        shoppinglistAddItemViewModel.getFormViewStateLiveData().observe(viewLifecycleOwner, { viewState ->
-            setFormViewState(viewState)
-        })
+        binding.textInputEditTextCategory.doOnTextChanged{text, start, before, count ->
+            if(!Validators.validateCategory(text!!.toString()))
+                binding.textInputEditTextCategory.error = "Moet ingevuld zijn"
+            else
+                binding.textInputEditTextCategory.error = null
+        }
+
+        binding.textInputEditTextQuantity.doOnTextChanged{text, start, before, count ->
+            if(!Validators.validateQuantity(text!!.toString()))
+                binding.textInputEditTextQuantity.error = "Moet een getal zijn tussen 1 en 100"
+            else
+                binding.textInputEditTextQuantity.error = null
+        }
+
+
+        binding.fragmentShoppingItemAddButton.setOnClickListener{
+            val validationForm = Validators.validateForm(
+                binding.textInputEditTextItemname.text.toString(),
+                binding.textInputEditTextCategory.text.toString(),
+                binding.textInputEditTextQuantity.text.toString()
+            )
+            if(validationForm){
+                shoppinglistAddItemViewModel.createItem(
+                    binding.textInputEditTextItemname.text.toString(),
+                    binding.textInputEditTextCategory.text.toString(),
+                    binding.textInputEditTextQuantity.text.toString()
+                )
+                findNavController().navigate(R.id.action_navigation_shoppinglist_add_item_fragment_to_navigation_shoppinglist)
+            }
+        }
 
         return binding.root
     }
 
-    private fun setFormViewState(viewState: AddItemFormViewState) {
-        binding.formViewState = viewState
-        binding.executePendingBindings()
-    }
 
 
 }
